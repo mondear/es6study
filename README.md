@@ -186,3 +186,16 @@
 		- atanh(x)
 	- 指数运算符：**
 		- b **=3  ===  b*b*b
+- 第七章 数组的扩展
+	- Array.from()将类似于数组的对象，或者可遍历（iterable）对象转换为数组
+	- from第二个参数为处理函数，第一个参数的每个项进行处理后返回新数组
+	- Array.of()将一组参数转换为数组
+	- Array.prototype.copyWithin(target, start = 0, end = this.length)
+		- 从target开始替换，从start开始读取，end结束读取
+		- 用于替换数组中自己的元素
+	- arr.find()参数为一个回调函数，将每一个项传入回调函数中进行运算，直到第一个返回true的成立，并返回其值
+		- 回调函数最多接受三个参数，当前值／当前位置／原数组
+	- findIndex()与上面类似，返回位置
+	- arr.fill()使用给定值填充数组
+	- arr.entries()/keys()/values()返回一个遍历器对象，用于for of中进行遍历，也可以手动使用遍历器的next()方法
+	- arr.includes()返回数组是否包含参数值，可选第二参数（起始位置）
