@@ -230,3 +230,36 @@
 		- 尾调用：函数最后一个语句为调用函数，包括return语句，返回值为undefined也不是
 	- 尾递归：尾函数为自己
 	- 优化方案：将最后一步函数用到的变量设置到上一步函数的参数中。
+- 第九章 对象的扩展
+	- 属性简写
+	- 方法简写
+	- 属性赋值器 getter,setter
+	- 定义对象时可以把属性名放在方括号内，括号内可以放表达式，但是解析后必须为字符串
+	- Object.is() 参数为两个，比较两参数是否完全相等。
+	- Object.assign(target, source…) 把对象source中可枚举的属性赋值到目标对象target中，source可以有多个。如果有同名属性会覆盖
+		- 浅拷贝
+		- 用途：
+			- 为对象添加属性
+			- 为对象添加方法
+			- 克隆对象
+			- 合并多个对象
+			- 为属性指定默认值
+	- Object.getOwnPropertyDescriptor(Obj, name)查看obj对象中value属性的描述对象，其中enumerable自带表示是否可枚举
+	- 会忽略enumerable为false的操作：
+		- for in
+		- Object.keys()
+		- JSON.stringify()
+		- Object.assign()
+		- class中的原型属性不具备枚举性。
+	- 属性的遍历：
+		- for in: 只包含可枚举属性 不包含Symbol属性
+		- Object.keys(obj):返回一个数组，包含对象自身（不包含继承）的所有可枚举属性（不包含symbol属性）
+		- Object.getOwnPropertyNames(obj): 包含对象自身所有属性 不包含symbol属性
+		- Object.getOwnPropertySymbols(obj): 包含所有symbol属性
+		- Reflect.ownKeys(obj):包含所有
+		- 遍历顺序（属性名）：数值、字符串、Symbol（数值以数字属性排列，其他以生成顺序排列）。
+	- __proto__属性用了读取和设置对象的prototype对象，因为下划线原因，属性为内部使用属性，应该使用Object.getPrototypeOf(),Object.setPrototypeOf(),Object.create()去操作。
+	- 遍历器：(返回为数组）
+		- Object.values()
+		- Object.entries()
+		- Object.keys()
