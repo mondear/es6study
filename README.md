@@ -87,5 +87,36 @@
 		- 遍历map解构
 			- 任何部署了iterator接口的对象，都可以用for..of遍历
 		- 输入模块的指定方法
-
-
+- 第四章 字符串的扩展
+	- es5中双字节字符串表示为’\uxxxx\uxxxx’
+	- ‘\u20bb7’会被解析为’\u20bb+7’
+	- es6中将码点放入大括号能就能正确解析’\u(20bb7}’
+	‘\u{41}\u{42}\u{43}’=‘abc’
+	- js中超过4字节的字符，会被认为是两个字符
+	- es6中codePointAt()方法可以正确处理4字节字符
+	- codePointAt().toString()可以将十进制输出转换为十六进制
+	- for of方法可以正确识别32为utf-16字符
+	- String.fromeCharCode(ucode)识别16位字符
+	- String.fromeCodePoint()可以识别32位字符
+	- es6中新加入字符串遍历器for of
+	- at()与charAt()
+		- at能够返回32位字符，charAt()不能正确反应32位字符
+	- normalize() 合成字符
+	- includes() 返回布尔值，表示参数是否在字符串中
+	- startsWith() 返回布尔值，表示参数是否在字符串头部
+	- endWith() 返回布尔值，是否在尾部
+	- s.repeat(n) 返回将s重复n次的字符串 ，n位小数会被取整，负数或者Infinity会报错，0返回空字符串
+	- s.padStart(n, st)将s用st补全到n位，st添加在左边
+	- s.padEnd()同上，st添加在尾部
+	- st可省略 默认填充空格
+	- 模版字符串
+		- 字符串定义在``中
+		- 可以表示普通字符串，多行字符串，字符串中可嵌入变量${value} value表示仁义的js表达式
+		- 如果value不是字符串，会按照一般规则转换为字符串
+		- 模版字符串可以嵌套
+	- 标签模版
+		- tag`name ${cc} is ${bb}`
+		- 同等于
+		- tag([‘name ‘,’ is ‘],cc, bb)
+		- 传递前会先解析cc和bb
+	- String.raw()参数为字符串，返回一个斜杠都被转义的字符串。如果参数中\已经转义了就不再转义
