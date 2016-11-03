@@ -139,3 +139,50 @@
 	- y隐含了头部匹配
 	- sticky属性，表示是否使用y修饰符
 	- flags返回正则表达式的修饰符
+- 第六章 数值的扩展
+	- 二进制／八进制写法
+		- 0b1111/0o111
+		- 0B/0O
+	- 转换为十进制
+		- Number(‘0b111’)
+	- Number.isFinite()是否有限
+		- 整数小数返回true
+	- Number.inNaN()检测是否为NaN
+	- 两个方法只对数值有效，非数值全返回false
+	- Number.parseInt()/Number.parseFloat()由全局移动到Number类中，行为不变
+	- Number.isInteger() 是否整数，字符串不会转换
+	- Number.EPSILON一个极小值，用于浮点计算中的误差范围设置
+	- 安全整数Number.isSafeInteger()
+		- js能表示的安全整数范围为-2^53~2^53，不含两端点
+		- Number.MAX_SAFE_INTEGER/Number.MIN_SAFE_INTEGER安全整数的上下限
+	- Math方法都是静态的
+	- Math中方法会将参数先转换为数值
+	- Math.trunc()祛除一个数的小数部分
+	- Math.sign()判断正数／负数／0
+		- 整数返回+1
+		- 负数返回-1
+		- 0返回0
+		- -0返回-0
+		- 其他返回NaN
+	- Math.cbrt()计算立方根
+	- Math.clz32()返回参数有多少个前导0.
+		- <<运算符与其直接相关
+		- 参数为小数是直接忽略小数部分
+	- Math.imul()返回两个数以带符号32位整数形式相乘的结果，返回值也是一个32位带符号整形
+	- Math.fround()返回单精度浮点数形式
+	- Math.hypot()返回所有参数的平方和的平方根
+	- 对数方法：
+	- Math.expm1()返回e^x-1===Math.exp(x)-1
+	- Math.log1p()返回1+x的自然对数===Math.log(1+x)如果小于-1，返回NaN
+	- Math.log10(x)
+	- Math.log2()
+	- 三角函数方法：
+	- Math.:
+		- sinh(x)
+		- cosh(x)
+		- tanh(x)
+		- asinh(x)
+		- acosh(x)
+		- atanh(x)
+	- 指数运算符：**
+		- b **=3  ===  b*b*b
