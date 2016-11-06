@@ -18,6 +18,5 @@ var a = new Cellection();
 a.add('foo');
 a.add('bar')
 console.log(a[size]);
-console.log(Cellection.sizeOf(a));
-
-Object.keys(a);
+console.log(Object.keys(a));
+Object.getOwnPropertySymbols(a);
