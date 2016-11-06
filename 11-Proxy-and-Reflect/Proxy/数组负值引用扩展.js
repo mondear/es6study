@@ -5,6 +5,7 @@ function createArray(...elemente) {
       if (index < 0) {
         properKey = String(target.length + index);
       }
+      return Reflect.get(target, properKey, receiver);
     }
   };
   let target = [];
