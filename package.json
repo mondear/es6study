@@ -1,0 +1,22 @@
+{
+  "name": "es6study",
+  "version": "1.0.0",
+  "description": "一些笔记",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mondear/es6study.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mondear/es6study/issues"
+  },
+  "homepage": "https://github.com/mondear/es6study#readme",
+  "dependencies": {
+    "debug": "^2.2.0"
+  }
+}
