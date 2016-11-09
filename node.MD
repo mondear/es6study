@@ -1,0 +1,480 @@
+- 第一章 ES6简介
+	- ECMAScript是JavaScript的规格，后者是前者的实现。
+- 第二章 let和const
+	- let与var一样为声明变量，但是let的作用域为所在代码块。
+	- 初略的理解为{}中。
+	- for循环中let只在循环中能够使用
+	- let不会发生变量提升
+	- let/const存在暂时性死区
+		- 在一个块中，如果在声明let/const之前使用了变量，那么直接报错。
+		- typeof在这里达不到百分百安全，let变量在声明前会发生错误
+		- typeof在检测一个没有声明的变量时显示undefined，与let不同
+		- function默认参数为let（可能～），如果参数为x=y,y=1就会发生死区，因为y在使用前没有声明。
+	- let不能在作用域内重复声明，也就意味着函数参数不能从新声明（在函数内部）。
+	- es6的作用域：
+		- 全局
+		- 函数
+		- 块级
+	- 无块级作用域缺点：
+		- 内层变量覆盖外层变量
+		- 用于计数的循环变了变为全局变量
+	- 块级作用域可以任意嵌套
+	- 块级作用域可以替代立即执行的匿名函数
+	- es5严格声明中函数只能在顶层作用域和函数作用域中声明
+	- 严格模式
+		- ‘use strict’
+	- es6中，块级作用域中定义的函数为let声明，块级作用域中声明的函数不能在块以外调用
+		- 在不同实现下有差异，所以尽量避免块中声明函数
+		- 如果需要应该写成函数表达式
+	- const为常量
+	- const必须初始化
+	- const不提升
+	- 不可重复声明
+	- 对于复合变量，const只是不能改变指向数据的地址，地址内的数据可以改变
+	- 冻结对象
+		- const foo = Object.freeze({})
+		- 这种方法只是对对象本身冻结，还需要对属性也一起冻结
+	- es6声明方式：
+		- var
+		- let
+		- const
+		- import
+		- class
+		- function
+	- node中全局对象为global，浏览器中为windows
+	- es6中，var和function声明的变量依然为全局对象的属性，let／const／class声明的全局变量不再进入全局属性中
+- 第三章 变量的解构和赋值
+	- es6允许按照一定的模式，从数组和对象中提取值，对变量进行赋值，这辈称作解构（Destructuring）
+	- 本质上，这种写法属于‘模式匹配’
+	- 如果解构失败，变量的值就为undefined
+	- 不完全解构，只匹配一部分值
+	- 如果右边不是可遍历的结构，那么解构失败：
+		- 1
+		- false
+		- NaN
+		- undefined
+		- null
+		- {}
+		- 前五个位转换为object时不具备Iterator接口
+		- 第六个本身没有Iterator接口
+	- 解构同时适用于let和const
+	- Set解构也可以使用解构
+	- 只要含有Iterator接口的数据都能解构
+	- Generator函数原生有Iterator接口
+	- 解构可以有默认值
+	- es6内部严格使用‘===’判断一个位置是否有值。如果一个数组成员不严格等于undefined，默认赋值不发生。
+	- 默认值可以引用解构赋值的其他值，如果不存在则报错。
+	- 对象也能运用解构
+	- 对象没有顺序，所以解构必须对应属性名称。同名属性名才能解构。
+		- 但是{foo: bar}这样的形式中，将被解构对象中foo数据赋值刀bar上。
+	- js会将行首的{理解成代码块，所以如果之前声明了的变量名不能出现在解构中
+	- 可以将解构包围在()中解决问题。
+	- 字符串也能解构
+	- 数值和布尔值解构会将其转换为对象，解构时运用其属性和方法名
+	- 函数参数解构
+	- ES6规定，只要有可能导致解构的奇异，就不得使用圆括号（不能嗲圆括号情况：）
+		- 变量声明中
+		- 函数参数中
+		- 赋值语句中，不能讲整个模式或者过嵌套模式中的一层，放在圆括号里
+	- 可以使用圆括号情况：
+		- 赋值语句的非模式部分。
+	- 解构用途
+		- 交换变量值
+		- 从函数返回多个值
+		- 函数参数的定义
+		- 提取json数据
+		- 函数参数默认值
+		- 遍历map解构
+			- 任何部署了iterator接口的对象，都可以用for..of遍历
+		- 输入模块的指定方法
+- 第四章 字符串的扩展
+	- es5中双字节字符串表示为’\uxxxx\uxxxx’
+	- ‘\u20bb7’会被解析为’\u20bb+7’
+	- es6中将码点放入大括号能就能正确解析’\u(20bb7}’
+	‘\u{41}\u{42}\u{43}’=‘abc’
+	- js中超过4字节的字符，会被认为是两个字符
+	- es6中codePointAt()方法可以正确处理4字节字符
+	- codePointAt().toString()可以将十进制输出转换为十六进制
+	- for of方法可以正确识别32为utf-16字符
+	- String.fromeCharCode(ucode)识别16位字符
+	- String.fromeCodePoint()可以识别32位字符
+	- es6中新加入字符串遍历器for of
+	- at()与charAt()
+		- at能够返回32位字符，charAt()不能正确反应32位字符
+	- normalize() 合成字符
+	- includes() 返回布尔值，表示参数是否在字符串中
+	- startsWith() 返回布尔值，表示参数是否在字符串头部
+	- endWith() 返回布尔值，是否在尾部
+	- s.repeat(n) 返回将s重复n次的字符串 ，n位小数会被取整，负数或者Infinity会报错，0返回空字符串
+	- s.padStart(n, st)将s用st补全到n位，st添加在左边
+	- s.padEnd()同上，st添加在尾部
+	- st可省略 默认填充空格
+	- 模版字符串
+		- 字符串定义在``中
+		- 可以表示普通字符串，多行字符串，字符串中可嵌入变量${value} value表示仁义的js表达式
+		- 如果value不是字符串，会按照一般规则转换为字符串
+		- 模版字符串可以嵌套
+	- 标签模版
+		- tag`name ${cc} is ${bb}`
+		- 同等于
+		- tag([‘name ‘,’ is ‘],cc, bb)
+		- 传递前会先解析cc和bb
+	- String.raw()参数为字符串，返回一个斜杠都被转义的字符串。如果参数中\已经转义了就不再转义
+- 第五章 正则的扩展
+	- es6使用正则表达式作为构造函数第一个参数，可以有第二参数，其会覆盖表达式中的修饰符
+		- var regex = new RegExp(/xyz/ig, ‘i’)
+		- i将替换ig
+	- 字符串的四个可使用正则的方法全部调用RegExp中的方法
+		- match
+		- replace
+		- search
+		- split
+	- 添加u修饰符
+		- 处理32字节字符
+		- 对于大于0xffff的字符使用.点字符的时候必须加u
+		- 使用{}表示的unicode字符，必须加u
+		- 量词使用也可正确识别32位
+		- 只有带有u标识符才能正确解读unicode中的{]
+	- y修饰符，与g相似，但是y在匹配一次的下一次是从匹配字符的下一个开始匹配，并不是全局。
+	- y隐含了头部匹配
+	- sticky属性，表示是否使用y修饰符
+	- flags返回正则表达式的修饰符
+- 第六章 数值的扩展
+	- 二进制／八进制写法
+		- 0b1111/0o111
+		- 0B/0O
+	- 转换为十进制
+		- Number(‘0b111’)
+	- Number.isFinite()是否有限
+		- 整数小数返回true
+	- Number.inNaN()检测是否为NaN
+	- 两个方法只对数值有效，非数值全返回false
+	- Number.parseInt()/Number.parseFloat()由全局移动到Number类中，行为不变
+	- Number.isInteger() 是否整数，字符串不会转换
+	- Number.EPSILON一个极小值，用于浮点计算中的误差范围设置
+	- 安全整数Number.isSafeInteger()
+		- js能表示的安全整数范围为-2^53~2^53，不含两端点
+		- Number.MAX_SAFE_INTEGER/Number.MIN_SAFE_INTEGER安全整数的上下限
+	- Math方法都是静态的
+	- Math中方法会将参数先转换为数值
+	- Math.trunc()祛除一个数的小数部分
+	- Math.sign()判断正数／负数／0
+		- 整数返回+1
+		- 负数返回-1
+		- 0返回0
+		- -0返回-0
+		- 其他返回NaN
+	- Math.cbrt()计算立方根
+	- Math.clz32()返回参数有多少个前导0.
+		- <<运算符与其直接相关
+		- 参数为小数是直接忽略小数部分
+	- Math.imul()返回两个数以带符号32位整数形式相乘的结果，返回值也是一个32位带符号整形
+	- Math.fround()返回单精度浮点数形式
+	- Math.hypot()返回所有参数的平方和的平方根
+	- 对数方法：
+	- Math.expm1()返回e^x-1===Math.exp(x)-1
+	- Math.log1p()返回1+x的自然对数===Math.log(1+x)如果小于-1，返回NaN
+	- Math.log10(x)
+	- Math.log2()
+	- 三角函数方法：
+	- Math.:
+		- sinh(x)
+		- cosh(x)
+		- tanh(x)
+		- asinh(x)
+		- acosh(x)
+		- atanh(x)
+	- 指数运算符：**
+		- b **=3  ===  b*b*b
+- 第七章 数组的扩展
+	- Array.from()将类似于数组的对象，或者可遍历（iterable）对象转换为数组
+	- from第二个参数为处理函数，第一个参数的每个项进行处理后返回新数组
+	- Array.of()将一组参数转换为数组
+	- Array.prototype.copyWithin(target, start = 0, end = this.length)
+		- 从target开始替换，从start开始读取，end结束读取
+		- 用于替换数组中自己的元素
+	- arr.find()参数为一个回调函数，将每一个项传入回调函数中进行运算，直到第一个返回true的成立，并返回其值
+		- 回调函数最多接受三个参数，当前值／当前位置／原数组
+	- findIndex()与上面类似，返回位置
+	- arr.fill()使用给定值填充数组
+	- arr.entries()/keys()/values()返回一个遍历器对象，用于for of中进行遍历，也可以手动使用遍历器的next()方法
+	- arr.includes()返回数组是否包含参数值，可选第二参数（起始位置）
+- 第八章 函数的扩展
+	- 函数参数可以添加默认值
+	- 可以与解构肤质默认值结合使用
+		- 双重默认
+	- 函数的length属性返回没有设置默认值的参数的个数
+	- rest参数，用于获取多余参数
+		- function (…values) ...values就是rest参数的形式
+		- rest参数后不能再有其他参数
+	- 扩展运算符‘…’：为rest的逆运算
+	- 扩展运算符的应用：
+		- 合并数组
+		- 与解构赋值结合
+		- 函数的返回值
+		- 字符串
+		- 实现Iterator接口的对象：…NODELIST返回的值相当于nodelist每次遍历返回的值的集合，但不是数组，是单独的变量
+		- Map和Set解构，Generator函数
+	- name属性，返回函数名
+		- es5中匿名函数返回空，es6中匿名函数name返回实际的函数名
+	- 箭头函数 =>
+		- 如果箭头函数要返回对象，那么必须在外层加括号。
+		- var getTempItem = id => ({id: id, name; ‘temp’})
+		- 注意：
+			- 箭头函数体内的this对象是定义时所在对象，不是运行时所在对象
+			- 不可以当作构造函数
+			- 不可以使用arguments对象，可以用rest替代
+			- 不可以使用yield命令
+	- 函数绑定ES7 双冒号
+	- 尾调用优化
+		- 尾调用：函数最后一个语句为调用函数，包括return语句，返回值为undefined也不是
+	- 尾递归：尾函数为自己
+	- 优化方案：将最后一步函数用到的变量设置到上一步函数的参数中。
+- 第九章 对象的扩展
+	- 属性简写
+	- 方法简写
+	- 属性赋值器 getter,setter
+	- 定义对象时可以把属性名放在方括号内，括号内可以放表达式，但是解析后必须为字符串
+	- Object.is() 参数为两个，比较两参数是否完全相等。
+	- Object.assign(target, source…) 把对象source中可枚举的属性赋值到目标对象target中，source可以有多个。如果有同名属性会覆盖
+		- 浅拷贝
+		- 用途：
+			- 为对象添加属性
+			- 为对象添加方法
+			- 克隆对象
+			- 合并多个对象
+			- 为属性指定默认值
+	- Object.getOwnPropertyDescriptor(Obj, name)查看obj对象中value属性的描述对象，其中enumerable自带表示是否可枚举
+	- 会忽略enumerable为false的操作：
+		- for in
+		- Object.keys()
+		- JSON.stringify()
+		- Object.assign()
+		- class中的原型属性不具备枚举性。
+	- 属性的遍历：
+		- for in: 只包含可枚举属性 不包含Symbol属性
+		- Object.keys(obj):返回一个数组，包含对象自身（不包含继承）的所有可枚举属性（不包含symbol属性）
+		- Object.getOwnPropertyNames(obj): 包含对象自身所有属性 不包含symbol属性
+		- Object.getOwnPropertySymbols(obj): 包含所有symbol属性
+		- Reflect.ownKeys(obj):包含所有
+		- 遍历顺序（属性名）：数值、字符串、Symbol（数值以数字属性排列，其他以生成顺序排列）。
+	- __proto__属性用了读取和设置对象的prototype对象，因为下划线原因，属性为内部使用属性，应该使用Object.getPrototypeOf(),Object.setPrototypeOf(),Object.create()去操作。
+	- 遍历器：(返回为数组）
+		- Object.values()
+		- Object.entries()
+		- Object.keys()
+- 第十章 Symbol
+	- 一种机制，保证每个属性名字都是独一无二的
+	- 原始数据类型
+	- let s = Symbol()  s为原始数据类型，所以s不能添加属性
+	- Symbol(str) 这样用来识别某个Symbol
+	- Symbol不能与其他值进行运算
+	- 可以显示的转换为字符串
+	- 可以转换为布尔值，为true
+	- Symbol作为属性名时不能使用点运算符
+	- 属性内定义时必须放在方括号内
+	- 现在理解的作用就是在对象中定义一个非私有的内部对象
+	- Symbol.for() 参数为一个字符串，如果这个字符串表示的Symbol对象存在，就返回这个对象，如果不存在就返回一个新的对象。而Symbol()每次都会生成一个新的对象，不会因为参数字符串相同而返回上一个对象
+	- Symbol.keyFor()参数为symbol对象，返回这个对象的key，如果没有这个对象就返回undefined。
+	- Symbol.for()登记的是全局的。
+	- 内置Symbol值（指代obj中的默认属性）
+		- Symbol.hasInstance 相当于instanceof 在使用 foo instanceof Foo    的时候其实是调用Foo[Symbol.hasInstance](foo)
+		- Symbol.isConcatSpreadable 等于一个布尔值，表示该对象使用array.prototype.concat()时，是否可以展开。默认concat参数中的数组是可以展开的，obj不可以展开。
+		- Symbol.species 指向一个方法，如果方法存在，那么类的实例的构造函数就为它，即this.constructor[Symbol.species]默认的读取器为
+		static get [symbol.species]() {return this;}
+		- Symbol.match/replace/search/spilt 当调用相对的字符串方法时其实是调用Symbol对应的属性指向的函数
+		- Symbol.iterator指向默认的遍历方法
+		- Symbol.toPrimitive当对象转换为默认的原始对象时调用其对应的方法
+		- Symbol.toStringTag指向Object.prototype.toString
+		- Symbol.unscopables 指向一个对象，对象指定使用with关键字时，那些属性会被with环境排除。
+- 第十一章 Proxy和Reflect
+	- 元编程metaprogramming
+	- Proxy对对象进行代理，在调用对象时触发对象代理中的方法。
+	- 支持拦截的操作：
+		- get(target, propKey, receiver) 拦截对象的读取 receiver时一个对象
+		- set(target, propKey, value, receiver) 设置操作 必须返回一个布尔值
+		- has(target, propKey) 拦截propKey in proxy操作，以及对象的hasOwnProperty方法 必须返回一个布尔值
+		- deleteProperty(target, propKey) 拦截delete proxy[propKey] 必须返回一个布尔值
+		- ownKeys(target) 拦截Object.getOwnPropertyNames(proxy)/getOwnPropertySymbol(proxy)/keys(proxy)方法
+		- getOwnPropertyDescriptor(target, propKey) 拦截Object.getOwnPropertyDescriptor(proxy, propKey)
+		- defineProperty(target, propKey, propDesc) 拦截Object.defineProperty(proxy, propKey, propDesc)/defineProperties(proxy, propDescs)
+		- preventExtensions(target) 拦截Object.preventExtensions(proxy）
+		- getPrototypeOf(target)
+		- isExtensible(target)
+		- setPrototypeOf(target,proto)
+		- apply(target, object, args)
+		- construct(target, args) 拦截new操作
+	- Proxy.revocabble() 参数为一个对象和handle拦截器设置对象，返回一个对象，包含proxy属性和revoke属性，proxy为拦截器，revoke为一个函数，用来取消拦截器。
+	- Reflect的作用：
+		- 将Object的一些方法放在Reflect中
+		- 修改Object的方法的返回值，使其更加合理
+		- 让Object操作变成函数行为，例如：
+			- name in obj >> Reflect.has(obj, name)
+			- delete obj[name] >> Reflect.deleteProperty(obj.name)
+		- Reflect方法与Proxy方法一一对应 Reflect的方法表示对象默认方法。
+	- Reflect与Proxy相同函数不同点
+		- Reflect.get(target, name, receiver) 如果对象属性声明了get方法，那么属性的读取函数的this绑定到receiver上。
+		- set同理
+		- Reflect.apple(fun, thisArg,args) 同等于Function.prototype.apply.call(fun,thisArg,args)
+			- fn.apply(obj, args) 用来绑定函数的this对象，如果函数自己定义了apply方法，那么只能用Function.prototype.apply.call(fn,obj,args),现在可以用Reflect简化操作。
+- 第十二章 二进制数组
+	- 二进制数据存储在ArrayBuffer中，这个类的实例存储二进制数据
+	- 无法进行直接的读取，必须通过TypeView或者DataView读取数据
+- 第十三章 Set和Map数据结构
+	- Set生成无重复数据的数组
+	- var set = new Set([i,2,3,4,5])可以接受一个数组或者类似于数组的对象进行构造
+	- 构造时不会进行类型转换
+	- 在Set内部NaN只能有一个 在其他环节中NaN===NaN不成立
+	- Set的结构的实例属性：
+		- Set.prototype.constructor; 构造函数
+		- Set.prototype.size返回Set的实例成员数量
+	- Set的四个操作方法：
+		- add(value); 返回添加后的整个Set
+		- delete(value);
+		- has(value);
+		- clear() 清楚全部元素
+	- Array.from(Set)可以把set转换为数组
+	- Set遍历操作：
+		- keys();
+		- values();
+		- entries();
+		- forEach();
+		- keys/values/entries返回遍历器，因为Set没有键值，所以key/value行为一样
+		- 可以用for of直接遍历
+		- forEach()参数为回调函数
+		set.forEach((value, key) => console.log(value *2));
+		- 扩展…也可用于set
+	- WeakSet
+		- 与set相似
+		- 成员只能是对象。
+		- WeakSet中所有对象都是弱引用，也就是说，如果其他对象不引用其中的对象，那么gc就会回收这个对象所占用的内存。
+		- 会自动对参数进行扩展
+		- 没有size属性，所以不能遍历
+	- 方法：
+		- WeakSet.prototype.add(value);
+		- WeakSet.prototype.delete(value);
+		- WeakSet.prototype.has(value)
+	- Map与Object类似，不过Map的键可以用任意的值替代，Objec只能用字符串,map不会自动的将键转换为字符串
+	- var m = new Map();
+	- 属性和方法：
+		- size
+		- set(key, value) 返回整个map对象，所以可以连续使用：map.set(d).set(v)
+		- get(key)
+		- has(key)
+		- delete(key)
+		- clear()
+		- 遍历方法：
+		- keys()
+		- values()
+		- entries()
+		- forEach() :function(value, key, map) 可以有第二个参数，绑定this
+		- […map]转换为数组
+		- 转换为对象：遍历map逐个添加到新的obj中
+		- 对象转换为 map；逐个遍历，然后添加
+		- map转换为json：先转换为对象，然后调用JSON.stringify();
+	- WeakMap
+		- 键名只能是对象
+		- 弱引用
+- 第十四章 Iterator和for...of循环
+	- Iterator作用：
+		- 为各种数据结构，提供一个统一的，简便的访问接口。
+		- 使得数据结构的成员能够按某种次序排列。
+		- 提供给for of使用
+	- 每次调研Iterator的next方法指针就指向结构的下一个属性，返回value和done。done为true/false表示是否结束。
+	- Iterator接口部署在数据结构的Symbol.iterator上，只要有这个属性的结构就能遍历
+	let iter = arr[Symbol.iterator]()。之后可以调用item.next();
+	- 数组／某些类似数组的对象／Set／Map具有原生的Iterator接口
+	- 默认调用Iterator的场合：
+		- for of
+		- 解构赋值
+		- 扩展运算符
+		- yield
+		- Arry.from()
+		- new Map()/Set()/WeakMap()/WeakSet()
+		- Promise.all()
+		- Promise.rese()
+	- 字符串具有原生Iterator，因为它类似数组
+	- Iterator默认的有next／return／throw方法，自己写的方法只要有next就行
+	- return方法是在for of方法以外退出（出现错误，或者break／continue时）
+	- return对象必须返回一个对象
+	- for of能够使用的地方：数组、Set／Map结构、某些类似数组结构（anguments对象、DOM NODEList等）、Generator对象、字符串。
+	- for of可以替代数组的forEach方法
+	- for of调用数组的遍历器接口，与for in不同。（如果数组添加了一个属性，那么forin能够遍历到属性名）。
+	- Set返回一个值，Map返回{key, value}对象
+- 第十五章 Generator函数
+	- function* funname(){}
+	- 返回一个遍历器对象。
+	- 每次执行返回{value:’’,done:boolom}
+	- 返回的值为yield后接的对象
+	- 如果函数中无yield，则函数只有调用next后才会执行。
+	- yield如果在语句中出现，必须放在圆括号中
+	- yield value 用作函数参数或者赋值时不用加括号。
+	- next可以带一个参数，如果语句中var reset = yield i;这时如果给next赋值，那么参数会传递给reset。用于接下来的运行。
+	- throw可以接受一个参数用于传递给catch；try{yield}catch(e){console.log(e)},这时e就为传递进去的参数。
+	- return与上一章同。同样可以接受一个参数。
+	- yield* 用来在一个Generator函数中调用一个Generator函数 yield* foo();foo为Generator函数，这时会解析成为所以next对应的yield位置。加入上层函数中。
+	- 含义：
+		- Generator与状态机: 普状态机需要在外部定义一个布尔值，g不需要
+		- 协程：协程是一种程序的运行方式，可以理解为‘协作的函数’或者‘协作的线程’，协程可以是单线程也可以是多线程，前者为特殊的子例程，后者为特殊的线程。
+		- 协程与子例程：子例程的存储与一个堆栈中，运行方式为先进后出，而协程是一种并行的方式，多个函数（线程）存储在不同的stack中，一个函数（线程）执行，其他的函数暂停，可以暂停当前函数，把执行权交给其他函数，始终只有一个执行函数。因为使用了多个stack，所以协程是以消耗内存的代价来执行的。
+		- 协程与普通线程的区别：相似之处在于都有自己独立的上下文，以及可以共享全局变量，但是线程是同时运行的，运行的优先级是抢占，由运行环境决定。那么在ECMAS中规定，程序在单线程中，Generator就可以作为一个不完全的协程用于替代回调函数。说到不完整，则是由于Generator的执行着只能是G函数的调用者。在使用中可以有yield转换函数的运行权。
+	- 应用：
+		- 异步操作的同步化表达： 回避回调函数。
+		- 控制流管理：
+		- 部署Iterator接口
+		- 作为数据结构
+- 第十五章 promise
+	- 含义： 为一个容器，保存着一个未来才会完成的操作的结果。
+	- 特点：1.对象状态不受外界影响。2.一旦状态改变就不会再变化，任何时候都可以获取这个状态。
+	- 三个状态：pending/resolved/rejected
+	- 缺点：1.无法取消Promise。2.如果不设置回调，Promese中的错误无法被抛出。3.当处于Pending时无法知道进行到哪一步。
+	- 使用：var pro = new Promise(function(resolve, reject){… ; resolve(some);reject(some)})
+	- 传递进去的函数接受两个参数，resolve为resolved状态执行的操作，rejected为错误执行的操作。
+	- pro.then(fn1,fn2) fn1代表resolve的执行函数，fn2代表reject的执行函数。可以忽略fn2.返回一个新的Promise实例，所以可以进行链式操作。
+	- Promise.prototype.then()：then参数的函数中的参数为Promise对象执行体中返回的resolve（value）的value值。
+	- Promise.prototype.catch() === Promise.prototype.then(null, reject);
+	- Promise.all() 参数为一个数组，将数组中的Promise实例。用于将多个promiso实例包装成一个Promise，参数可以是呆iterator的结构，不限定为数组，如果数组中不是Promise实例，将调用Promise.resolve进行转换，只有当所有的Promise都执行成功后状态才会从Pending转换为Resolved。
+	- Promise.race()同all。只是只要一个Promise状态转换为Resolved，就会将外层的Promise转换为Resolve状态，外层的resolve直接调用完成的resolve。
+	- Promise.resolve() 将参数的对象转换为Promise对象。
+	- resolve()参数：
+		- Promise对象： 直接返回当前对象。
+		- thenable对象： （对象里面有一个then函数的对象）。新Promise对象直接执行then中内容。
+		- 不是一个对象： 如果为一个原始值，那么这个值直接做微resolve的参数。
+		- 不带参数： 直接返回一个状态为Resolved的Promise实例。
+	- Promise.reject() 同上参数，直接返回一个状态为Rejected的Promise实例。
+- 第十七章 异步操作和Async
+	- async awit
+	- async函数返回一个Promise实例，函数中return为then中函数的参数，如果出现错误错误由catch接收
+	- 只有async中的所有await执行完毕才会执行之后then中的函数。
+	- 正常情况下await后接的是一个Promise对象，如果不是会转换。
+	- 只要有一个await语句后的Promise状态为Rejected，async返回就为Rejcted状态的Promise
+	- 注意点：
+		- await后的Promise对象可能运行后状态为rejected，所以await语句最好写在trycatch中
+		- 如果await后的操作为独立的异步操作，那么尽量让它们同时运行。eg: awaitTwo.js
+		- await只能在async函数中。
+- 第十八章 class
+	- class中定义的所有方法不可以枚举，与es5不同。
+	- 类不会进行变量提升。如果定义class在使用之前，会报错。
+	- constructor方法默认返回Object.create(this)。这个行为让我们可以自己定义返回的对象。
+	- class表达式与function表达式相似，var Myme = class Me(){} Me在内部可以使用，指向当前类。
+	- class表达式可以写出立即执行的类。
+	- 私有方法：es6没有私有方法，可以用下面三个方法来解决。
+		- 将私有方法的命名前加下划线来区别。
+		- 将私有方法定义在外部。
+		- 使用Symbol来命名私有方法。
+	- 继承extends
+		- 子类constructor中必须调用super（）方法，将父类的this拷贝为自生的this。ES5实质上是子类先创建自己的实例对象，再将父类的属性方法转移到子类.中。而ES6中是先创建父类的实例对象，然后再在构造函数中对this进行修改。
+		- 子类中只有调用了super后才能使用this。
+	- prototype和__proto__
+		- 子类的__proto__指向父类。
+		- 子类的prototype.__proto__指向父类的prototype
+	- super关键字
+		- 在函数中super()代表父类的构造函数。
+		- 在类中super.proto/super.method()代表父类的属性和方法
+	- class的getter／setter
+	- class的静态方法static
+		- 不会被实例继承，直接通过类来调用。
+	- 静态属性（Class.propname），无法在类中定义。可以在定义类后Class.prop这样定义一个名为prop的静态属性
+- 第二十章 Module
+	- 整体加载 import * as value from ‘value’ 将value模块中的所有export加载到value中。
+	- export default something 定义模块默认输出的内容。
